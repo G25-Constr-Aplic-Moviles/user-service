@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, Blueprint
+from ..commands.get_user import GetUser
 from ..commands.reset import Reset
 from ..commands.create_user import CreateUser
 from ..commands.generate_token import GenerateToken
@@ -16,6 +17,11 @@ def create():
 @users_blueprint.route('/users/auth', methods=['POST'])
 def auth():
     user = GenerateToken(request.get_json()).execute()
+    return jsonify(user)
+
+@users_blueprint.route('/users/me', methods=['GET'])
+def show():
+    user = GetUser(auth_token()).execute()
     return jsonify(user)
 
 @users_blueprint.route('/users/ping', methods=['GET'])
