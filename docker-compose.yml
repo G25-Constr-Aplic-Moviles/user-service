@@ -1,0 +1,38 @@
+services:
+  users:
+    build: ./users
+    ports:
+      - "3000:8080"
+    environment:
+      DB_NAME: users-db
+      DB_HOST: users_db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      FLASK_APP: ./src/main.py
+    depends_on:
+      users_db:
+        condition: service_healthy
+    networks:
+      - app_net
+      - user_net
+  users_db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: users-db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+    networks:
+      - user_net
+
+networks:
+  app_net:
+  user_net:
+
+volumes:
+  users_data:
