@@ -14,7 +14,7 @@ class SessionConfig():
         # db_port = os.environ['DB_PORT']
         # db_name = os.environ['DB_NAME']
         # return f'postgresql://{db_user}:{db_pass}@{db_host}:{db_port}/{db_name}'
-        return os.environ['DATABASE_URL']
+        return os.environ['DATABASE_URL'].replace('postgres://', 'postgresql://')
 
 
 session_config = SessionConfig()
