@@ -2,7 +2,7 @@ services:
   users:
     build: ./users
     ports:
-      - "3000:8080"
+      - "80:80"
     environment:
       DB_NAME: users-db
       DB_HOST: users_db

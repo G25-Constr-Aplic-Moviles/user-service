@@ -15,8 +15,8 @@ RUN pipenv install
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 80
 
 ENV FLASK_APP="./src/main.py"
 
-ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "--port=8080"]
+ENTRYPOINT ["pipenv", "run", "flask", "run", "-h", "0.0.0.0", "--port=80"]
